@@ -1,0 +1,4 @@
+gforjump/*.gb
+gforjump/*.lst
+gforjump/*.sym
+gforjump/*.map
