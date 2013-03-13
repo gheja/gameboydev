@@ -79,7 +79,7 @@ void process_keys()
 	
 	if(_keys & J_UP)
 	{
-		if (objects[0].state != SPRITE_STATE_JUMPING)
+		if (objects[0].state != SPRITE_STATE_JUMPING && objects[0].state != SPRITE_STATE_FALLING)
 		{
 			objects[0].state = SPRITE_STATE_JUMPING;
 			objects[0].speed_y = -24;
