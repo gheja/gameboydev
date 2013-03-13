@@ -8,12 +8,12 @@
 
 void init_background()
 {
-	set_bkg_data(BACKGROUND_TILE_START, BACKGROUND_TILE_COUNT, bkg_data);
+	set_bkg_data(BACKGROUND_TILE_START, BACKGROUND_TILE_COUNT, BACKGROUND_TILE_DATA);
 }
 
 void init_sprites()
 {
-	set_sprite_data(SPRITE_TILE_START, SPRITE_TILE_COUNT, sprite_data);
+	set_sprite_data(SPRITE_TILE_START, SPRITE_TILE_COUNT, SPRITE_TILE_DATA);
 	set_sprite_tile(0, 0);
 	set_sprite_prop(0, 0);
 	move_sprite(0, 20, 20);
