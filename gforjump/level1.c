@@ -14,7 +14,7 @@ const game_tile tiles[] = {
 };
 
 game_object objects[] = {
-	{ 2, 2, 1, 0, 0, 0, 0, 0 }, /* player */
+	{ 2, 7, 1, 0, 0, 0 }, /* player */
 
-	{ 0, 0, 0, 0, 0, 0, 0, 0 }
+	{ 0, 0, 0, 0, 0, 0 }
 };

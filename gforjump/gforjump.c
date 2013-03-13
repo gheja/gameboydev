@@ -49,67 +49,22 @@ void load_level()
 	
 }
 
-void move_object(UBYTE object_id, UBYTE x, UBYTE sub_x, UBYTE y, UBYTE sub_y)
+void move_object(UBYTE object_id, INT16 x, INT16 y)
 {
 	objects[object_id].x = x;
-	objects[object_id].sub_x = sub_x;
 	objects[object_id].y = y;
-	objects[object_id].sub_y = sub_y;
 	
 	/* object update should be separated from tile/sprite update */
-	move_sprite(object_id, objects[object_id].x * 8 + objects[object_id].sub_x / 8, objects[object_id].y * 8 + objects[object_id].sub_y / 8);
+	move_sprite(object_id, objects[object_id].x / 8, objects[object_id].y / 8);
 }
 
-void scroll_object(UBYTE object_id, BYTE x, BYTE sub_x, BYTE y, BYTE sub_y)
+void scroll_object(UBYTE object_id, INT16 x, INT16 y)
 {
-	BYTE tmp_sub_x, tmp_sub_y;
-	
-	tmp_sub_x = (BYTE) objects[object_id].sub_x + sub_x;
-	tmp_sub_y = (BYTE) objects[object_id].sub_y + sub_y;
-	
-	/* overflow check and handling */
-	if (sub_x > 0)
-	{
-		if (tmp_sub_x > 63)
-		{
-			objects[object_id].x += 1;
-			tmp_sub_x -= 64;
-		}
-	}
-	else if (sub_x < 0)
-	{
-		if (tmp_sub_x < 0)
-		{
-			objects[object_id].x -= 1;
-			tmp_sub_x += 64;
-		}
-	}
-	
-	/* overflow check and handling */
-	if (sub_y > 0)
-	{
-		if (objects[object_id].sub_y > 63)
-		{
-			objects[object_id].y += 1;
-			tmp_sub_y -= 64;
-		}
-	}
-	else if (sub_y < 0)
-	{
-		if (tmp_sub_y < 0)
-		{
-			objects[object_id].y -= 1;
-			tmp_sub_y += 64;
-		}
-	}
-	
 	objects[object_id].x += x;
 	objects[object_id].y += y;
-	objects[object_id].sub_x = tmp_sub_x;
-	objects[object_id].sub_y = tmp_sub_y;
 	
 	/* object update should be separated from tile/sprite update */
-	move_sprite(object_id, objects[object_id].x * 8 + objects[object_id].sub_x / 8, objects[object_id].y * 8 + objects[object_id].sub_y / 8);
+	move_sprite(object_id, objects[object_id].x / 8, objects[object_id].y / 8);
 }
 
 UBYTE _keys;
@@ -238,7 +193,7 @@ void collision_check()
 	/* collision check */
 	if (objects[0].speed_y > 0) // below player
 	{
-		if (objects[0].y > 12)
+		if (objects[0].y > 12 * 8 * 8)
 		{
 			objects[0].speed_y = 0;
 			if (objects[0].speed_x != 0)
@@ -273,7 +228,7 @@ void update_background()
 
 void update_sprites()
 {
-	scroll_object(0, 0, objects[0].speed_x, 0, objects[0].speed_y);
+	scroll_object(0, objects[0].speed_x, objects[0].speed_y);
 }
 
 int main()

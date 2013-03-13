@@ -10,9 +10,8 @@ typedef struct _game_tile
 
 typedef struct _game_object
 {
-	UBYTE x, y;            /* position on layer in blocks */
-	UBYTE data_index;      /* index of data in the data array */
-	UBYTE sub_x, sub_y;    /* position inside the block (8th pixels) */
-	BYTE speed_x, speed_y; /* speeds (8th pixels / frame, -128..127)  */
+	INT16 x, y;             /* position on layer in blocks */
+	UBYTE data_index;       /* index of data in the data array */
+	INT16 speed_x, speed_y; /* speeds (8th pixels / frame)  */
 	UBYTE state;
 } game_object;
