@@ -3,7 +3,7 @@
 #include <gb/gb.h>
 #include "types.h"
 #include "consts.h"
-#include "tiles_gbc.c"
+#include "gfx_gbc.c"
 #include "level1.c"
 
 void init_background()
