@@ -1,10 +1,14 @@
 /* gforjump for Game Boy - https://github.com/gheja/gameboydev/ */
 
 #include <gb/gb.h>
+#include <string.h>
 #include "types.h"
 #include "consts.h"
 #include "gfx_gbc.c"
 #include "level1.c"
+
+game_object objects[40];
+game_tile tiles[255];
 
 void init_background()
 {
@@ -20,8 +24,10 @@ void init_sprites()
 	objects[0].state = SPRITE_STATE_FALLING;
 }
 
-void load_level()
+void load_level(UBYTE level_id)
 {
+	/* TODO: level_id is currently ignored */
+	
 	UBYTE i, j, k;
 	unsigned char bkg_tiles[1];
 	
@@ -35,6 +41,22 @@ void load_level()
 		}
 	}
 	
+	for (i=0; level1_tiles[i].data_index != 0; i++)
+	{
+		memcpy(&tiles[i], &level1_tiles[i], sizeof(game_tile));
+	}
+	// terminator
+	tiles[i].data_index = 0;
+	
+	for (i=0; level1_objects[i].data_index != 0; i++)
+	{
+		memcpy(&objects[i], &level1_objects[i], sizeof(game_object));
+	}
+	// terminator
+	objects[i].data_index = 0;
+	
+	/* TODO: destroy the objects */
+	
 	for (i=0; tiles[i].data_index != 0; i++)
 	{
 		bkg_tiles[0] = tiles[i].data_index;
@@ -46,7 +68,6 @@ void load_level()
 			}
 		}
 	}
-	
 }
 
 void move_object(UBYTE object_id, INT16 x, INT16 y)
@@ -246,7 +267,7 @@ int main()
 	init_background();
 	init_sprites();
 	
-	load_level();
+	load_level(1);
 	
 	// make background layer visible
 	SHOW_BKG;
