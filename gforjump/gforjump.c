@@ -247,6 +247,31 @@ void animate_sprites()
 
 void update_background()
 {
+	/* 20x18 tiles on screen */
+	
+	/* (8 + 1) tile * 8 px * 8 subpx = ... */
+	if (PLAYER.x < _level.scroll_x + 576)
+	{
+		_level.scroll_x = PLAYER.x - 576;
+	}
+	/* (20 - 8) tile * 8 px * 8 subpx = ... */
+	else if (PLAYER.x > _level.scroll_x + 768)
+	{
+		_level.scroll_x = PLAYER.x - 768;
+	}
+	
+	/* (7 + 1) tile * 8 px * 8 subpx = ... */
+	if (PLAYER.y < _level.scroll_y + 512)
+	{
+		_level.scroll_y = PLAYER.y - 512;
+	}
+	/* (18 - 3) tile * 8 px * 8 subpx = ... */
+	else if (PLAYER.y > _level.scroll_y + 960)
+	{
+		_level.scroll_y = PLAYER.y - 960;
+	}
+	
+	move_bkg((UINT8) (_level.scroll_x / 8), (UINT8) (_level.scroll_y / 8));
 }
 
 void update_sprites()
