@@ -208,6 +208,11 @@ void update_player()
 	}
 }
 
+void kill_player()
+{
+	load_level(1);
+}
+
 void collision_check()
 {
 	UBYTE wanted_x;
@@ -257,6 +262,11 @@ void update_background()
 		if (_level.scroll_x < _level.scroll_x_min)
 		{
 			_level.scroll_x = _level.scroll_x_min;
+			
+			if (PLAYER.x < _level.scroll_x_min)
+			{
+				kill_player();
+			}
 		}
 	}
 	/* (20 - 8) tile * 8 px * 8 subpx = ... */
@@ -266,6 +276,12 @@ void update_background()
 		if (_level.scroll_x > _level.scroll_x_max)
 		{
 			_level.scroll_x = _level.scroll_x_max;
+			
+			/* (20 + 1) tile * 8 px * 8 subpx = ... */
+			if (PLAYER.x > _level.scroll_x_max + 1344)
+			{
+				kill_player();
+			}
 		}
 	}
 	
