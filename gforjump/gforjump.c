@@ -216,8 +216,9 @@ void collision_check()
 	/* collision check */
 	if (PLAYER.speed_y > 0) // below player
 	{
-		if (PLAYER.y > 12 * 8 * 8)
+		if (PLAYER.y >= 15 * 8 * 8)
 		{
+			PLAYER.y = 15 * 8 * 8;
 			PLAYER.speed_y = 0;
 			if (PLAYER.speed_x != 0)
 			{
@@ -277,10 +278,10 @@ void update_background()
 			_level.scroll_y = _level.scroll_y_min;
 		}
 	}
-	/* (18 - 3) tile * 8 px * 8 subpx = ... */
-	else if (PLAYER.y > _level.scroll_y + 960)
+	/* (18 - 4) tile * 8 px * 8 subpx = ... */
+	else if (PLAYER.y > _level.scroll_y + 896)
 	{
-		_level.scroll_y = PLAYER.y - 960;
+		_level.scroll_y = PLAYER.y - 896;
 		if (_level.scroll_y > _level.scroll_y_max)
 		{
 			_level.scroll_y = _level.scroll_y_max;
