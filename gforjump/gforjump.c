@@ -82,18 +82,12 @@ void move_object(UBYTE object_id, INT16 x, INT16 y)
 {
 	_level.objects[object_id].x = x;
 	_level.objects[object_id].y = y;
-	
-	/* object update should be separated from tile/sprite update */
-	move_sprite(object_id, _level.objects[object_id].x / 8, _level.objects[object_id].y / 8);
 }
 
 void scroll_object(UBYTE object_id, INT16 x, INT16 y)
 {
 	_level.objects[object_id].x += x;
 	_level.objects[object_id].y += y;
-	
-	/* object update should be separated from tile/sprite update */
-	move_sprite(object_id, _level.objects[object_id].x / 8, _level.objects[object_id].y / 8);
 }
 
 UBYTE _keys;
@@ -257,7 +251,14 @@ void update_background()
 
 void update_sprites()
 {
+	UINT8 i;
+	
 	scroll_object(0, PLAYER.speed_x, PLAYER.speed_y);
+	
+	for (i=0; _level.objects[i].data_index != 0; i++)
+	{
+		move_sprite(i, (_level.objects[i].x - _level.scroll_x) / 8, (_level.objects[i].y - _level.scroll_y) / 8);
+	}
 }
 
 int main()
