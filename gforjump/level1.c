@@ -15,7 +15,7 @@ game_tile level1_tiles[] = {
 
 game_object level1_objects[] = {
 	/* x, y, index, speed_x, speed_y, state */
-	{ 2, 7, 1, 0, 0, SPRITE_STATE_FALLING }, /* player */
+	{ 256, 128, 1, 0, 0, SPRITE_STATE_FALLING }, /* player */
 	
 	{ 0, 0, 0, 0, 0, 0 }
 };
