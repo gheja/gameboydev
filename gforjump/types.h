@@ -18,8 +18,10 @@ typedef struct _game_object
 
 typedef struct _level
 {
-	UBYTE scroll_x_min, scroll_x_max;
-	UBYTE scroll_y_min, scroll_y_max;
+	INT16 scroll_x;
+	INT16 scroll_y;
+	UBYTE scroll_x_block_min, scroll_x_block_max;
+	UBYTE scroll_y_block_min, scroll_y_block_max;
 	game_tile tiles[255];
 	game_object objects[255];
 } level;

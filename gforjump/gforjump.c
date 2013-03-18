@@ -32,6 +32,13 @@ void load_level(UBYTE level_id)
 	UBYTE i, j, k;
 	unsigned char bkg_tiles[1];
 	
+	_level.scroll_x_block_min = 0;
+	_level.scroll_x_block_max = 32;
+	_level.scroll_y_block_min = 0;
+	_level.scroll_y_block_max = 32;
+	_level.scroll_x = 0;
+	_level.scroll_y = 0;
+	
 	/* clear the background */
 	bkg_tiles[0] = 0;
 	for (i=0; i<40; i++)
