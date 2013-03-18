@@ -272,11 +272,19 @@ void update_background()
 	if (PLAYER.y < _level.scroll_y + 512)
 	{
 		_level.scroll_y = PLAYER.y - 512;
+		if (_level.scroll_y < _level.scroll_y_min)
+		{
+			_level.scroll_y = _level.scroll_y_min;
+		}
 	}
 	/* (18 - 3) tile * 8 px * 8 subpx = ... */
 	else if (PLAYER.y > _level.scroll_y + 960)
 	{
 		_level.scroll_y = PLAYER.y - 960;
+		if (_level.scroll_y > _level.scroll_y_max)
+		{
+			_level.scroll_y = _level.scroll_y_max;
+		}
 	}
 	
 	move_bkg((UINT8) (_level.scroll_x / 8), (UINT8) (_level.scroll_y / 8));
