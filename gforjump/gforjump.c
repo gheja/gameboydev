@@ -32,10 +32,10 @@ void load_level(UBYTE level_id)
 	UBYTE i, j, k;
 	unsigned char bkg_tiles[1];
 	
-	_level.scroll_x_block_min = 0;
-	_level.scroll_x_block_max = 32;
-	_level.scroll_y_block_min = 0;
-	_level.scroll_y_block_max = 32;
+	_level.scroll_x_min = 0;
+	_level.scroll_x_max = 32 * 8;
+	_level.scroll_y_min = 0;
+	_level.scroll_y_max = 32 * 8;
 	_level.scroll_x = 0;
 	_level.scroll_y = 0;
 	
@@ -253,11 +253,19 @@ void update_background()
 	if (PLAYER.x < _level.scroll_x + 576)
 	{
 		_level.scroll_x = PLAYER.x - 576;
+		if (_level.scroll_x < _level.scroll_x_min)
+		{
+			_level.scroll_x = _level.scroll_x_min;
+		}
 	}
 	/* (20 - 8) tile * 8 px * 8 subpx = ... */
 	else if (PLAYER.x > _level.scroll_x + 768)
 	{
 		_level.scroll_x = PLAYER.x - 768;
+		if (_level.scroll_x > _level.scroll_x_max)
+		{
+			_level.scroll_x = _level.scroll_x_max;
+		}
 	}
 	
 	/* (7 + 1) tile * 8 px * 8 subpx = ... */
