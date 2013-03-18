@@ -7,8 +7,7 @@
 #include "gfx_gbc.c"
 #include "level1.c"
 
-game_object objects[40];
-game_tile tiles[255];
+level _level;
 
 void init_background()
 {
@@ -21,7 +20,7 @@ void init_sprites()
 	set_sprite_tile(0, 0);
 	set_sprite_prop(0, 0);
 	move_sprite(0, 20, 20);
-	objects[0].state = SPRITE_STATE_FALLING;
+	_level.objects[0].state = SPRITE_STATE_FALLING;
 }
 
 void load_level(UBYTE level_id)
@@ -43,28 +42,28 @@ void load_level(UBYTE level_id)
 	
 	for (i=0; level1_tiles[i].data_index != 0; i++)
 	{
-		memcpy(&tiles[i], &level1_tiles[i], sizeof(game_tile));
+		memcpy(&_level.tiles[i], &level1_tiles[i], sizeof(game_tile));
 	}
 	// terminator
-	tiles[i].data_index = 0;
+	_level.tiles[i].data_index = 0;
 	
 	for (i=0; level1_objects[i].data_index != 0; i++)
 	{
-		memcpy(&objects[i], &level1_objects[i], sizeof(game_object));
+		memcpy(&_level.objects[i], &level1_objects[i], sizeof(game_object));
 	}
 	// terminator
-	objects[i].data_index = 0;
+	_level.objects[i].data_index = 0;
 	
 	/* TODO: destroy the objects */
 	
-	for (i=0; tiles[i].data_index != 0; i++)
+	for (i=0; _level.tiles[i].data_index != 0; i++)
 	{
-		bkg_tiles[0] = tiles[i].data_index;
-		for (j=0; j<tiles[i].width; j++)
+		bkg_tiles[0] = _level.tiles[i].data_index;
+		for (j=0; j<_level.tiles[i].width; j++)
 		{
-			for (k=0; k<tiles[i].height; k++)
+			for (k=0; k<_level.tiles[i].height; k++)
 			{
-				set_bkg_tiles(tiles[i].x + j, tiles[i].y + k, 1, 1, bkg_tiles);
+				set_bkg_tiles(_level.tiles[i].x + j, _level.tiles[i].y + k, 1, 1, bkg_tiles);
 			}
 		}
 	}
@@ -72,20 +71,20 @@ void load_level(UBYTE level_id)
 
 void move_object(UBYTE object_id, INT16 x, INT16 y)
 {
-	objects[object_id].x = x;
-	objects[object_id].y = y;
+	_level.objects[object_id].x = x;
+	_level.objects[object_id].y = y;
 	
 	/* object update should be separated from tile/sprite update */
-	move_sprite(object_id, objects[object_id].x / 8, objects[object_id].y / 8);
+	move_sprite(object_id, _level.objects[object_id].x / 8, _level.objects[object_id].y / 8);
 }
 
 void scroll_object(UBYTE object_id, INT16 x, INT16 y)
 {
-	objects[object_id].x += x;
-	objects[object_id].y += y;
+	_level.objects[object_id].x += x;
+	_level.objects[object_id].y += y;
 	
 	/* object update should be separated from tile/sprite update */
-	move_sprite(object_id, objects[object_id].x / 8, objects[object_id].y / 8);
+	move_sprite(object_id, _level.objects[object_id].x / 8, _level.objects[object_id].y / 8);
 }
 
 UBYTE _keys;
@@ -100,10 +99,10 @@ void process_keys()
 	
 	if(_keys & J_UP)
 	{
-		if (objects[0].state != SPRITE_STATE_JUMPING && objects[0].state != SPRITE_STATE_FALLING)
+		if (_level.objects[0].state != SPRITE_STATE_JUMPING && _level.objects[0].state != SPRITE_STATE_FALLING)
 		{
-			objects[0].state = SPRITE_STATE_JUMPING;
-			objects[0].speed_y = -24;
+			_level.objects[0].state = SPRITE_STATE_JUMPING;
+			_level.objects[0].speed_y = -24;
 		}
 	}
 	
@@ -114,54 +113,54 @@ void process_keys()
 	
 	if(_keys & J_LEFT)
 	{
-		if (objects[0].state == SPRITE_STATE_STANDING)
+		if (_level.objects[0].state == SPRITE_STATE_STANDING)
 		{
-			objects[0].state = SPRITE_STATE_WALKING;
+			_level.objects[0].state = SPRITE_STATE_WALKING;
 		}
 		
 		if (is_running)
 		{
-			if (objects[0].speed_x > -24)
+			if (_level.objects[0].speed_x > -24)
 			{
-				objects[0].speed_x -= 1;
+				_level.objects[0].speed_x -= 1;
 			}
 		}
 		else
 		{
-			if (objects[0].speed_x > -12)
+			if (_level.objects[0].speed_x > -12)
 			{
-				objects[0].speed_x -= 1;
+				_level.objects[0].speed_x -= 1;
 			}
 			else
 			{
-				objects[0].speed_x += 1;
+				_level.objects[0].speed_x += 1;
 			}
 		}
 	}
 	
 	if(_keys & J_RIGHT)
 	{
-		if (objects[0].state == SPRITE_STATE_STANDING)
+		if (_level.objects[0].state == SPRITE_STATE_STANDING)
 		{
-			objects[0].state = SPRITE_STATE_WALKING;
+			_level.objects[0].state = SPRITE_STATE_WALKING;
 		}
 		
 		if (is_running)
 		{
-			if (objects[0].speed_x < 24)
+			if (_level.objects[0].speed_x < 24)
 			{
-				objects[0].speed_x += 1;
+				_level.objects[0].speed_x += 1;
 			}
 		}
 		else
 		{
-			if (objects[0].speed_x < 12)
+			if (_level.objects[0].speed_x < 12)
 			{
-				objects[0].speed_x += 1;
+				_level.objects[0].speed_x += 1;
 			}
 			else
 			{
-				objects[0].speed_x -= 1;
+				_level.objects[0].speed_x -= 1;
 			}
 		}
 	}
@@ -172,34 +171,34 @@ void update_player()
 	// slow down
 	if (!_keys & (J_RIGHT || J_LEFT))
 	{
-		if (objects[0].speed_x < -1)
+		if (_level.objects[0].speed_x < -1)
 		{
-			objects[0].speed_x += 1;
+			_level.objects[0].speed_x += 1;
 		}
-		else if (objects[0].speed_x > 1)
+		else if (_level.objects[0].speed_x > 1)
 		{
-			objects[0].speed_x -= 1;
+			_level.objects[0].speed_x -= 1;
 		}
-		else if (objects[0].speed_x != 0)
+		else if (_level.objects[0].speed_x != 0)
 		{
-			objects[0].speed_x = 0;
-			objects[0].state = SPRITE_STATE_STANDING;
+			_level.objects[0].speed_x = 0;
+			_level.objects[0].state = SPRITE_STATE_STANDING;
 		}
 	}
 	
 	//gravity
-	if (objects[0].speed_y < 64)
+	if (_level.objects[0].speed_y < 64)
 	{
-		objects[0].speed_y++;
+		_level.objects[0].speed_y++;
 	}
 	
-	switch (objects[0].state)
+	switch (_level.objects[0].state)
 	{
 		case 3: // SPRITE_STATE_JUMPING
 			
-			if (objects[0].speed_y > 0)
+			if (_level.objects[0].speed_y > 0)
 			{
-				objects[0].state = SPRITE_STATE_FALLING;
+				_level.objects[0].state = SPRITE_STATE_FALLING;
 			}
 		break;
 		
@@ -212,25 +211,25 @@ void collision_check()
 	UBYTE wanted_y;
 	
 	/* collision check */
-	if (objects[0].speed_y > 0) // below player
+	if (_level.objects[0].speed_y > 0) // below player
 	{
-		if (objects[0].y > 12 * 8 * 8)
+		if (_level.objects[0].y > 12 * 8 * 8)
 		{
-			objects[0].speed_y = 0;
-			if (objects[0].speed_x != 0)
+			_level.objects[0].speed_y = 0;
+			if (_level.objects[0].speed_x != 0)
 			{
-				objects[0].state = SPRITE_STATE_WALKING;
+				_level.objects[0].state = SPRITE_STATE_WALKING;
 			}
 		}
 	}
-	else if (objects[0].speed_y < 0) // above player
+	else if (_level.objects[0].speed_y < 0) // above player
 	{
 	}
 	
-	if (objects[0].speed_x > 0) // right of player
+	if (_level.objects[0].speed_x > 0) // right of player
 	{
 	}
-	else if (objects[0].speed_x < 0) // left of player
+	else if (_level.objects[0].speed_x < 0) // left of player
 	{
 	}
 }
@@ -249,7 +248,7 @@ void update_background()
 
 void update_sprites()
 {
-	scroll_object(0, objects[0].speed_x, objects[0].speed_y);
+	scroll_object(0, _level.objects[0].speed_x, _level.objects[0].speed_y);
 }
 
 int main()

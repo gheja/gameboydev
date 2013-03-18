@@ -15,3 +15,11 @@ typedef struct _game_object
 	INT16 speed_x, speed_y; /* speeds (8th pixels / frame)  */
 	UBYTE state;
 } game_object;
+
+typedef struct _level
+{
+	UBYTE scroll_x_min, scroll_x_max;
+	UBYTE scroll_y_min, scroll_y_max;
+	game_tile tiles[255];
+	game_object objects[255];
+} level;
