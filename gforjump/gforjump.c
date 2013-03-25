@@ -185,7 +185,10 @@ void update_player()
 		else if (PLAYER.speed_x != 0)
 		{
 			PLAYER.speed_x = 0;
-			PLAYER.state = SPRITE_STATE_STANDING;
+			if (PLAYER.state == SPRITE_STATE_WALKING)
+			{
+				PLAYER.state = SPRITE_STATE_STANDING;
+			}
 		}
 	}
 	
