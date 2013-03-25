@@ -328,9 +328,6 @@ void update_sprites()
 
 int main()
 {
-	UBYTE x = 0;
-	unsigned char bkg_tiles[1];
-	
 	// disable interrupts for the time of init
 	disable_interrupts();
 	
@@ -363,11 +360,6 @@ int main()
 	while(1)
 	{
 		wait_vbl_done();
-		
-		x++;
-		
-		bkg_tiles[0] = (x / 16) % 2;
-		set_bkg_tiles(1, 1, 1, 1, bkg_tiles);
 		
 		process_keys();
 		
