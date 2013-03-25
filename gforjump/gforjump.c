@@ -232,6 +232,10 @@ void collision_check()
 			{
 				PLAYER.state = SPRITE_STATE_WALKING;
 			}
+			else
+			{
+				PLAYER.state = SPRITE_STATE_STANDING;
+			}
 		}
 	}
 	else if (PLAYER.speed_y < 0) // above player
