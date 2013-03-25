@@ -172,7 +172,7 @@ void process_keys()
 void update_player()
 {
 	// slow down
-	if (!_keys & (J_RIGHT || J_LEFT))
+	if (!(_keys & J_RIGHT || _keys & J_LEFT))
 	{
 		if (PLAYER.speed_x < -1)
 		{
