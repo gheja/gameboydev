@@ -30,7 +30,7 @@ void load_level(UBYTE level_id)
 	/* TODO: level_id is currently ignored */
 	
 	UBYTE i, j, k;
-	unsigned char bkg_tiles[1];
+	UBYTE bkg_tiles[32];
 	
 	_level.scroll_x_min = 0;
 	_level.scroll_x_max = 32 * 8;
@@ -40,13 +40,14 @@ void load_level(UBYTE level_id)
 	_level.scroll_y = 0;
 	
 	/* clear the background */
-	bkg_tiles[0] = 0;
 	for (i=0; i<32; i++)
 	{
-		for (j=0; j<32; j++)
-		{
-			set_bkg_tiles(i, j, 1, 1, bkg_tiles);
-		}
+		bkg_tiles[i] = 0;
+	}
+	
+	for (i=0; i<32; i++)
+	{
+		set_bkg_tiles(i, 0, 1, 32, bkg_tiles);
 	}
 	
 	for (i=0; level1_tiles[i].data_index != 0; i++)
@@ -213,7 +214,9 @@ void update_player()
 
 void kill_player()
 {
+	DISPLAY_OFF;
 	load_level(1);
+	DISPLAY_ON;
 }
 
 void collision_check()
