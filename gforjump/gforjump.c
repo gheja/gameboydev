@@ -41,9 +41,9 @@ void load_level(UBYTE level_id)
 	
 	/* clear the background */
 	bkg_tiles[0] = 0;
-	for (i=0; i<40; i++)
+	for (i=0; i<32; i++)
 	{
-		for (j=0; j<40; j++)
+		for (j=0; j<32; j++)
 		{
 			set_bkg_tiles(i, j, 1, 1, bkg_tiles);
 		}
