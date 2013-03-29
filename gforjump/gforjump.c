@@ -99,9 +99,9 @@ void process_keys()
 	
 	_keys = joypad();
 	
-	is_running = _keys & J_A;
+	is_running = _keys & J_B;
 	
-	if(_keys & J_UP)
+	if(_keys & J_UP || _keys & J_A)
 	{
 		if (PLAYER.state != SPRITE_STATE_JUMPING && PLAYER.state != SPRITE_STATE_FALLING)
 		{
