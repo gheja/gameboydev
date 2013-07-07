@@ -36,5 +36,15 @@ Brief introduction to Gameboy Color art
 ---------------------------------------
 
 (gbc_art.txt)
+
+
+GameBoy CPU Manual - Marc Rawer
+-------------------------------
+
+(GBCPUman.pdf)
+
+From: http://marc.rawer.de/Gameboy/Docs/GBCPUman.pdf
+
+
 (gbsound_original.txt)
 (gbsound.txt)
